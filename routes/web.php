@@ -34,3 +34,4 @@ Route::get('/project-management',[ProjetController::class, 'index'])->name('proj
 Route::get('/supprimer-projet/{id_projet}',[ProjetController::class, 'destroy']); 
 Route::get('/ajouter-projet',[ProjetController::class, 'create'])->name('ajouter-projet'); 
 Route::post('/ajouter/traitement',[ProjetController::class, 'store']); 
+Route::put('/terminer-projet/{id_projet}', [ProjetController::class, 'modifierStatutProjet'])->name('terminer-projet');

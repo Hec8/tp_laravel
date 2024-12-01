@@ -16,11 +16,7 @@ return new class extends Migration
             $table->string('titre');
             $table->text('description');
             $table->date('date_limite');
-            $table->string('status');
-            $table->foreignId('id')
-                  ->constrained('users')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+            $table->string('status')->default('en cours');
             $table->timestamps();
         });
     }

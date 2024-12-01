@@ -33,28 +33,40 @@ class ProjetController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $users = User::all();
-        $request->validate([ 
-            'titre' => 'required',
-            'description' => 'required',
-            'date_limite' => 'required',
-            'status' => 'required',
-            'id' => 'required'
-        ]);
+{
+    $validated = $request->validate([
+        'titre' => 'required|string|max:255',
+        'description' => 'required|string',
+        'date_limite' => 'required|date',
+    ]);
 
-        $users = User::all();
-        $projet = new Projet();
-        $projet->titre = $request->titre;
-        $projet->description = $request->description;
-        $projet->date_limite = $request->date_limite; 
-        $projet->status = $request->status;
-        $projet->id = $request->id;
-        $projet->save();
+    Projet::create([
+        'titre' => $validated['titre'],
+        'description' => $validated['description'],
+        'date_limite' => $validated['date_limite'],
+        'status' => 'en cours',
+    ]);
 
         return redirect('/ajouter-projet')->with('status', 'Le projet a bien été créé');
     }
 
+    public function modifierStatutProjet($id_projet)
+    {
+        // Trouver le projet via la clé primaire
+        $projet = Projet::find($id_projet);
+    
+        if (!$projet) {
+            return redirect('/project-management')->with('status', 'Projet introuvable.');
+        }
+    
+        // Vérifier et mettre à jour le statut
+        if ($projet->status === 'en cours') {
+            $projet->update(['status' => 'terminé']);
+            return redirect('/project-management')->with('status', 'Le projet est marqué comme terminé avec succès.');
+        } else {
+            return redirect('/project-management')->with('status', 'Le projet est déjà terminé !');
+        }
+    }
     /**
      * Display the specified resource.
      */
