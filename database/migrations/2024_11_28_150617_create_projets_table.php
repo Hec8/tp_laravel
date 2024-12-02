@@ -17,6 +17,10 @@ return new class extends Migration
             $table->text('description');
             $table->date('date_limite');
             $table->string('status')->default('en cours');
+            $table->foreignId('id')
+              ->constrained('users')
+              ->onDelete('cascade')
+              ->onUpdate('cascade');
             $table->timestamps();
         });
     }

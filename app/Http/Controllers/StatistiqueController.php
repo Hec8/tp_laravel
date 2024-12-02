@@ -1,28 +1,38 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class StatistiqueController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        $users = User::where('role', 'user')->get();
+        $user = Auth::user();
 
-    return view('user-management', compact('users'));
+        if ($user) {
+            $totalProjects = $user->projectUser->count();
+            $ongoingProjects = $user->projectUser->where('status', 'en cours')->count();
+            $completedProjects = $user->projectUser->where('status', 'terminé')->count();
+
+            $totalTasks = $user->taskUser->count();
+            $ongoingTasks = $user->taskUser->where('status', 'en cours')->count();
+            $completedTasks = $user->taskUser->where('status', 'terminé')->count();
+
+            return view('statistiques', compact(
+                'totalProjects',
+                'ongoingProjects',
+                'completedProjects',
+                'totalTasks',
+                'ongoingTasks',
+                'completedTasks'
+            )); 
+        }
     }
-
-    public function getUsers()
-{
-    return response()->json([
-        'data' => User::where('role', 'user')->get()
-    ]);
-}
+        
 
     /**
      * Show the form for creating a new resource.
@@ -70,9 +80,5 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
-        $user = User::find($id); 
-        $user->delete();
-
-        return redirect('/user-management')->with('status', 'L\'utilisateur a bien été supprimé');
     }
 }

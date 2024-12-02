@@ -7,21 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 class Tache extends Model
 {
     //
+    // Spécifiez la clé primaire
+    protected $primaryKey = 'id_tache';
+    public $incrementing = true;
+    protected $keyType = 'int';
     protected $fillable = [
         'titre',
         'description',
         'statut',
         'priorite',
-        'id_projet'
+        'id_projet',
+        'id',
     ];
 
-    public function projets()
+    // Relation avec le projet
+    public function projectTask() 
     {
-        return $this->belongsTo(Projet::class, 'id_projet'); 
+        return $this->belongsTo(Projet::class, 'id_projet'); // 'id_projet' est la clé étrangère dans la table 'taches'
     }
 
-    public function user()
+    // Relation avec l'utilisateur
+    public function userTask()
     {
-        return $this->belongsTo(User::class, 'id'); 
+        return $this->belongsTo(User::class, 'id'); // 'id' est la clé étrangère dans la table 'taches'
     }
 }

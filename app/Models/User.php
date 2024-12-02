@@ -6,6 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Projet; 
+use App\Models\Tache;  
+
 
 class User extends Authenticatable
 {
@@ -47,8 +50,16 @@ class User extends Authenticatable
         ];
     }
 
-    public function projects()
+    // Relation avec les projets
+    public function projectUser()
     {
-        return $this->hasMany(Projet::class, 'id'); 
+        return $this->hasMany(Projet::class, 'id'); // 'id' est la clé étrangère dans la table 'projets'
     }
+
+    // Relation avec les tâches 
+    public function taskUser()
+    {
+        return $this->hasMany(Tache::class, 'id'); // 'id' est la clé étrangère dans la table 'taches'
+    }
+
 }

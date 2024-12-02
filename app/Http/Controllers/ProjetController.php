@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Projet;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,6 +18,13 @@ class ProjetController extends Controller
 
         return view('project-management', compact('projets'));
     }
+    public function getProjets()
+{
+    return response()->json([
+        'data' => Projet::all()
+    ]);
+}
+
     
 
     /**
@@ -45,10 +53,11 @@ class ProjetController extends Controller
         'description' => $validated['description'],
         'date_limite' => $validated['date_limite'],
         'status' => 'en cours',
+        'id' => Auth::id(), // ID de l'utilisateur connecté
     ]);
 
-        return redirect('/ajouter-projet')->with('status', 'Le projet a bien été créé');
-    }
+    return redirect('/project-management')->with('status', 'Projet créé avec succès.');
+}
 
     public function modifierStatutProjet($id_projet)
     {
@@ -64,7 +73,7 @@ class ProjetController extends Controller
             $projet->update(['status' => 'terminé']);
             return redirect('/project-management')->with('status', 'Le projet est marqué comme terminé avec succès.');
         } else {
-            return redirect('/project-management')->with('status', 'Le projet est déjà terminé !');
+            return redirect('/project-management')->with('status', 'Le projet est déjà terminé ! Vous ne pouvez que le supprimer maintenant');
         }
     }
     /**
@@ -78,17 +87,32 @@ class ProjetController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id_projet)
     {
         //
+        $projet = Projet::find($id_projet);
+        return view('modifier-projet', compact('projet'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id_projet)
     {
-        //
+        // Trouver le projet à modifier
+        $projet = Projet::findOrFail($id_projet);
+
+        // Validation des données reçues
+        $validated = $request->validate([
+            'titre' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'date_limite' => 'nullable|date',
+        ]);
+
+        // Mise à jour des champs uniquement s'ils sont présents
+        $projet->update(array_filter($validated));  
+
+        return redirect('/project-management')->with('status', 'Le projet a bien été modifié');
     }
 
     /**

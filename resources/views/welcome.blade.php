@@ -28,7 +28,7 @@
               </li>
             </ul>
             <ul class="nav justify-content-end">
-              <li><a class="nav-link custom-link" href="{{ url('/dashboard') }}">Dashboard</a></li>
+              <li><a class="nav-link custom-link" href="{{ url('login') }}">Dashboard</a></li>
               <li><a class="nav-link custom-link" href="{{ route('login') }}">Sign in</a></li>
               <li><a class="nav-link custom-link" href="{{ route('register') }}">Sign up</a></li>
             </ul>

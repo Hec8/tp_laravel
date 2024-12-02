@@ -20,11 +20,19 @@ class Projet extends Model
         'description',
         'date_limite',
         'status',
+        'id',
     ];
-
-    public function taches()
+ 
+    // Relation avec les tâches
+    public function taskProject()
     {
-        return $this->hasMany(Tache::class, 'id_projet'); 
+        return $this->hasMany(Tache::class, 'id_projet'); // 'projet_id' est la clé étrangère dans la table 'taches'
+    }
+
+    // Relation avec l'utilisateur
+    public function userProject() 
+    {
+        return $this->belongsTo(User::class, 'id'); // 'user_id' est la clé étrangère dans la table 'projets'
     }
 
 }

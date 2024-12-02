@@ -41,6 +41,11 @@
                         {{ __('Project management') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('stats')" :active="request()->routeIs('stats')">
+                        {{ __('Mes statistiques') }}
+                    </x-nav-link>
+                </div>
                 @endif
             </div>
 
