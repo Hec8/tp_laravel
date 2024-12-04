@@ -12,21 +12,21 @@
 
                 <!-- Navigation Links -->
                 @if (Auth::user()->role === 'user')
-                    {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Tableau de bord') }}
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('project-management')" :active="request()->routeIs('project-management')">
+                            {{ __('Project management') }}
                         </x-nav-link>
                     </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('projects')" :active="request()->routeIs('projects')">
-                            {{ __('Mes Projets') }}
+                        <x-nav-link :href="route('task-management')" :active="request()->routeIs('task-management')">
+                            {{ __('Task management') }}
                         </x-nav-link>
                     </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('tasks')" :active="request()->routeIs('tasks')">
-                            {{ __('Mes Tâches') }}
+                        <x-nav-link :href="route('stats')" :active="request()->routeIs('stats')">
+                            {{ __('Mes statistiques') }}
                         </x-nav-link>
-                    </div> --}}
+                    </div>
                 @endif
 
                 <!-- Navigation Links pour les admins -->
@@ -39,6 +39,11 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('project-management')" :active="request()->routeIs('project-management')">
                         {{ __('Project management') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('task-management')" :active="request()->routeIs('task-management')">
+                        {{ __('Task management') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -105,11 +110,23 @@
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
-
+            @if (Auth::user()->role === 'admin')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('user-management')" :active="request()->routeIs('user-management')">
+                        {{ __('User management') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('project-management')" :active="request()->routeIs('project-management')">
+                        {{ __('Project management') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('stats')" :active="request()->routeIs('stats')">
+                        {{ __('Mes statistiques') }}
+                    </x-nav-link>
+                </div>
+                @endif
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}

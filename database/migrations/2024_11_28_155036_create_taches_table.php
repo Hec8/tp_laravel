@@ -15,11 +15,14 @@ return new class extends Migration
             $table->bigIncrements('id_tache'); // clé primaire personnalisée
             $table->string('titre');
             $table->text('description');
-            $table->string('statut');
-            $table->integer('priorite');
+            $table->string('statut')->default('en cours');
+            $table->text('priorite');
             $table->foreignId('id_projet')->constrained('projets')->onDelete('cascade');
             $table->foreignId('id')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('assigned_to')->nullable();
             $table->timestamps();
+
+            $table->foreign('assigned_to')->references('id')->on('users')->onDelete('cascade');
         });
         
     }

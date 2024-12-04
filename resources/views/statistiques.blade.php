@@ -43,6 +43,12 @@
                                         <p class="card-text">
                                             <strong>Tâches terminées :</strong> {{ $completedTasks }}
                                         </p>
+                                        <p class="card-text">
+                                            <strong>Tâches assignées par l'utilisateur :</strong> {{ $tasksAssignedByUser }}
+                                        </p>
+                                        <p class="card-text">
+                                            <strong>Tâches assignées à l'utilisateur :</strong> {{ $tasksAssignedToUser }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>

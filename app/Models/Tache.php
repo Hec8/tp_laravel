@@ -18,6 +18,7 @@ class Tache extends Model
         'priorite',
         'id_projet',
         'id',
+        'assigned_to',
     ];
 
     // Relation avec le projet
@@ -30,5 +31,15 @@ class Tache extends Model
     public function userTask()
     {
         return $this->belongsTo(User::class, 'id'); // 'id' est la clé étrangère dans la table 'taches'
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
+
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 }

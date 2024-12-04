@@ -71,7 +71,7 @@ class UserController extends Controller
     {
         //
         $user = User::find($id); 
-        $user->delete();
+        $user->delete(); 
 
         return redirect('/user-management')->with('status', 'L\'utilisateur a bien été supprimé');
     }

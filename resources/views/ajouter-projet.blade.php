@@ -26,7 +26,7 @@
                           </div>
                           <div class="mb-3">
                             <label for="titre">Description du projet</label>
-                              <input type="text" class="form-control" name="description" id="description" placeholder="Entrez la description du projet...">
+                              <textarea class="form-control" name="description" id="description" placeholder="Entrez la description du projet..."></textarea>
                           </div>
                           <div class="mb-3">
                             <label for="titre">Date limite</label>

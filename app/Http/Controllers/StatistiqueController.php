@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Tache;
 use Illuminate\Http\Request;
 
 class StatistiqueController extends Controller
@@ -22,13 +23,19 @@ class StatistiqueController extends Controller
             $ongoingTasks = $user->taskUser->where('status', 'en cours')->count();
             $completedTasks = $user->taskUser->where('status', 'terminé')->count();
 
+            // Tâches assignées par l'utilisateur
+            $tasksAssignedByUser = Tache::where('id', $user->id)->count();
+            $tasksAssignedToUser = Tache::where('assigned_to', $user->id)->count();
+
             return view('statistiques', compact(
                 'totalProjects',
                 'ongoingProjects',
                 'completedProjects',
                 'totalTasks',
                 'ongoingTasks',
-                'completedTasks'
+                'completedTasks',
+                'tasksAssignedByUser',
+                'tasksAssignedToUser',
             )); 
         }
     }

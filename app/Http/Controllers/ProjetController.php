@@ -14,15 +14,44 @@ class ProjetController extends Controller
     public function index()
     {
         //
-        $projets = Projet::all();
+        $user = Auth::user();
 
-        return view('project-management', compact('projets'));
+        // Récupérer les projets de l'utilisateur actuel
+        if ($user->role === "admin"){
+            $projects = Projet::all();
+            return view('project-management', compact('projects'));
+        }else {
+            $projects = Projet::where('id', $user->id)->get();
+            return view('project-management', compact('projects'));
+        }
     }
     public function getProjets()
 {
-    return response()->json([
-        'data' => Projet::all()
+    $user = Auth::user();
+
+    // Récupérer les projets de l'utilisateur actuel
+    if ($user->role === "admin"){
+        $projects = Projet::with('userProject')->get();
+        return response()->json([
+        'data' => $projects->map(function ($projet) {
+            return [
+                'id_projet' => $projet->id_projet,
+                'titre' => $projet->titre,
+                'description' => $projet->description,
+                'date_limite' => $projet->date_limite,
+                'status' => $projet->status,
+                'id' => $projet->userProject->name, // Ajout du nom de l'utilisateur qui a créé le projet
+            ];
+        }),
     ]);
+    }else {
+        $projects = Projet::where('id', $user->id)->get();
+        return response()->json([
+            'data' => $projects
+        ]);
+    }
+
+    
 }
 
     

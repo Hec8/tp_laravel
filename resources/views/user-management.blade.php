@@ -25,7 +25,7 @@
                                       searchable: false,
                                       render: function(data, type, row) {
                                           return `
-                                              <a href="/supprimer-projet/${row.id}" class="btn btn-danger m-1">Supprimer</a>
+                                              <a href="/supprimer-user/${row.id}" class="btn btn-danger m-1">Supprimer</a>
                                           `;
                                       }
                                   }
