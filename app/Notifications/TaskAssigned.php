@@ -19,12 +19,11 @@ class TaskAssigned extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(Tache $tache, $assignerName, $projectName)
+    public function __construct(Tache $tache, $assignerName)
     {
         //
         $this->tache = $tache;
         $this->assignerName = $assignerName;
-        $this->projectName = $projectName;
     }
 
     /**
@@ -44,7 +43,7 @@ class TaskAssigned extends Notification
     {
         return (new MailMessage)
             ->subject('Tâche assignée')
-            ->line('Une nouvelle tâche vous a été assignée par ' . $this->assignerName . ', sur le projet ' . $this->projectName)
+            ->line('Une nouvelle tâche vous a été assignée par ' . $this->assignerName)
             ->line('Connectez-vous avec le lien ci-dessous puis accédez à votre gestionnaire de tâches')
             ->action('Voir la tâche', route('login'))
             ->line('Merci d\'utiliser notre application!');

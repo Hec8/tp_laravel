@@ -77,7 +77,7 @@ class TacheController extends Controller
     public function store(Request $request)
     {
         //
-        $validated = $request->validate([
+        $validated = $request->validate([ 
             'titre' => 'required|string|max:255',
             'description' => 'required|string',
             'priorite' => 'required',
@@ -127,9 +127,8 @@ class TacheController extends Controller
         $tache->save();
 
         $assignerName = Auth::user()->name; // Nom de l'utilisateur qui a assigné la tâche
-        $projectName = $tache->project->titre; // Nom du projet
 
-        $user->notify(new TaskAssigned($tache, $assignerName, $projectName));
+        $user->notify(new TaskAssigned($tache, $assignerName));
 
         return redirect()->route('task-management')->with('status', 'La tâche a été assignée avec succès');
     }

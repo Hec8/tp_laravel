@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('projets', function (Blueprint $table) {
-            $table->increments('id_projet');
-            $table->string('titre');
+            $table->bigIncrements('id_projet'); // Clé primaire
+            $table->string('titre', 255);
             $table->text('description');
             $table->date('date_limite');
-            $table->string('status')->default('en cours');
-            $table->foreignId('id')
-              ->constrained('users')
-              ->onDelete('cascade')
-              ->onUpdate('cascade');
+            $table->string('status', 255)->default('en cours');
+            $table->bigInteger('id')->unsigned()->nullable(); // Foreign key users
             $table->timestamps();
+
+            // Index sur la colonne id (si utilisée comme relation)
+            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

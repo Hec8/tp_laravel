@@ -32,7 +32,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="id_projet">Project</label>
+                                <label for="id_projet">Projet</label> 
                                 <select name="id_projet" class="form-control">
                                     <option selected>Sélectionnez le projet associé</option>
                                     @foreach($projects as $project)
